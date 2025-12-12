@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arizona Water Policy Research</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0093E9 0%, #80D0C7 100%);
+            color: white;
+            padding: 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 250px;
+            height: 250px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        nav {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            color: white;
+            padding: 18px 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            position: relative;
+        }
+
+        nav button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        nav button.active {
+            background: rgba(255, 255, 255, 0.15);
+            border-bottom: 3px solid #4FC3F7;
+        }
+
+        .content {
+            padding: 50px;
+            min-height: 500px;
+            background: linear-gradient(180deg, #f8f9fa 0%, #e3f2fd 100%);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #0277BD;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid #4FC3F7;
+            font-size: 2.2em;
+            text-shadow: 1px 1px 2px rgba(2, 119, 189, 0.1);
+        }
+
+        h3 {
+            color: #01579B;
+            margin-top: 35px;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 30px;
+            background: linear-gradient(135deg, #0093E9 0%, #80D0C7 100%);
+            border-radius: 4px;
+        }
+
+        p {
+            line-height: 1.8;
+            color: #424242;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        ul {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 15px;
+            line-height: 1.7;
+            color: #424242;
+        }
+
+        .highlight-box {
+            background: white;
+            border-left: 6px solid #4FC3F7;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 147, 233, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-box::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(79, 195, 247, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 35px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #0093E9 0%, #80D0C7 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 147, 233, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -30%;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px) rotate(1deg);
+            box-shadow: 0 12px 35px rgba(0, 147, 233, 0.4);
+        }
+
+        .stat-card h4 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-card p {
+            color: white;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .letter-section {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+            padding: 35px;
+            border-radius: 20px;
+            margin: 30px 0;
+            border: 2px solid #4FC3F7;
+            box-shadow: 0 8px 20px rgba(79, 195, 247, 0.2);
+        }
+
+        .citation {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #0093E9;
+            border-radius: 10px;
+            font-size: 0.95em;
+            box-shadow: 0 4px 12px rgba(0, 147, 233, 0.15);
+            transition: transform 0.2s;
+        }
+
+        .citation:hover {
+            transform: translateX(5px);
+        }
+
+        .project-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 20px;
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 10px 30px rgba(0, 147, 233, 0.3);
+            border: 4px solid white;
+        }
+
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #01579B;
+            margin-top: 10px;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 35px 0;
+        }
+
+        .image-grid > div {
+            background: white;
+            padding: 15px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 147, 233, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .image-grid > div:hover {
+            transform: translateY(-10px);
+        }
+
+        .image-grid img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 25px;
+            }
+            
+            header h1 {
+                font-size: 1.8em;
+            }
+            
+            nav button {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+
+            h2 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Arizona Water Policy</h1>
+            <p>A Comprehensive Research Project by Ayan Bhakta</p>
+        </header>
+
+        <nav>
+            <button class="tab-btn active" onclick="openTab('home')">Home</button>
+            <button class="tab-btn" onclick="openTab('research')">Research</button>
+            <button class="tab-btn" onclick="openTab('integration')">Academic Integration</button>
+            <button class="tab-btn" onclick="openTab('action')">Taking Action</button>
+            <button class="tab-btn" onclick="openTab('reflection')">Reflection</button>
+            <button class="tab-btn" onclick="openTab('citations')">Works Cited</button>
+        </nav>
+
+        <div class="content">
+            <div id="home" class="tab-content active">
+                <h2>Arizona's Water Crisis: Understanding the Challenge</h2>
+                
+                <div class="highlight-box">
+                    <h3>The Issue</h3>
+                    <p>Arizona is facing one of the most serious water crises in its history. Our state depends heavily on the Colorado River, which provides water to over 40 million people across seven states. However, decades of overuse, population growth, and climate change have pushed this critical water source to the breaking point. Lake Mead and Lake Powell, the two largest reservoirs in the United States, are at about 30% capacity as of 2025. This isn't just a future problem anymore, it's happening right now and affecting real people in our communities.</p>
+                    
+                    <p>Arizona relies on groundwater for 41% of its water use, more than any other source. The problem is that we're pumping water out of underground aquifers way faster than nature can replenish them. In some rural areas, groundwater levels are dropping at alarming rates, causing wells to run dry and the ground to literally sink. Meanwhile, agriculture uses about 70% of Arizona's water, and our population keeps growing, which means we need more water for homes, businesses, and schools.</p>
+                </div>
+
+                <h3>The Facts</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>30%</h4>
+                        <p>Current capacity of Lake Mead and Lake Powell reservoirs</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>41%</h4>
+                        <p>Arizona's water use that comes from groundwater</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>70%</h4>
+                        <p>Of Arizona's water consumed by agriculture</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>500%+</h4>
+                        <p>Population growth since 1957 while water use dropped 3%</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>Key Facts About Arizona's Water Crisis</h3>
+                    <ul>
+                        <li>The Colorado River Basin has experienced over 20 years of drought, the worst in 1,200 years according to scientists.</li>
+                        <li>Arizona loses groundwater faster than any other state in the Colorado River Basin, with rural areas like southeastern Arizona losing over 8 millimeters per year.</li>
+                        <li>Between 2002 and 2024, Arizona's groundwater losses equaled the entire capacity of Lake Mead.</li>
+                        <li>Despite challenges, Arizona has managed to reduce total water use by 3% since the 1950s even with massive population growth, proving conservation can work.</li>
+                        <li>The Water Infrastructure Finance Authority (WIFA) has already funded over 180 projects supporting conservation and water infrastructure improvements.</li>
+                        <li>Desalination costs around $2,500 per acre-foot compared to just $6-10 for irrigation improvements, making cost a major barrier to new water sources.</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>Why This Matters</h3>
+                    <p><strong>For Our Families:</strong> Water isn't just about turning on the faucet. When groundwater runs out, wells go dry, and families lose access to clean drinking water. Property values drop, and communities face tough choices about their future. In some areas, residents are already dealing with water restrictions and rationing.</p>
+                    
+                    <p><strong>For Our Economy:</strong> Arizona's economy depends on reliable water. Agriculture, technology companies, manufacturing, and tourism all need water to operate. If we run out, businesses leave, jobs disappear, and our state's growth stops. Major companies are already factoring water availability into their decisions about whether to expand or relocate to Arizona.</p>
+                    
+                    <p><strong>For Our Future:</strong> This is my generation's challenge. If we don't solve this now, by the time I'm in my 30s and 40s, Arizona could look completely different. Some towns might not exist anymore. The state might have to limit new housing developments. We could face mandatory water rationing that changes how we live every single day. But here's the good news: we have solutions. We know what works. We just need the political will and public support to make it happen.</p>
+                    
+                    <p><strong>For Justice and Equity:</strong> Water scarcity doesn't affect everyone equally. Rural communities and tribal nations often lack the infrastructure and resources that cities have. Low-income families pay a higher percentage of their income for water. Any solution we come up with needs to be fair and help everyone, not just wealthy urban areas.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>What You'll Find on This Site</h3>
+                    <p>This website documents my service learning project for AP Government. Through research, volunteer work, and advocacy, I explored Arizona's water crisis from multiple angles. You'll find detailed research on what's worked and what hasn't, connections to what we learned in government class, the actions I took to make a difference, my personal reflections on the experience, and all the credible sources I used.</p>
+                    
+                    <p>My goal is simple: help people understand that this crisis is real, it's urgent, but it's also solvable. We just need to act now.</p>
+                </div>
+            </div>
+
+            <div id="research" class="tab-content">
+                <h2>Research & Investigation</h2>
+                
+                <div class="image-grid">
+                    <div>
+                        <img src="colorado_river_depletion.jpg" alt="Dried Colorado River" class="project-image">
+                        <p class="image-caption">Colorado River depletion affecting Arizona's water supply</p>
+                    </div>
+                    <div>
+                        <img src="lake_mead_low_levels.jpg" alt="Lake Mead Dam" class="project-image">
+                        <p class="image-caption">Lake Mead at critically low water levels</p>
+                    </div>
+                    <div>
+                        <img src="arizona_reservoir.jpg" alt="Arizona Reservoir" class="project-image">
+                        <p class="image-caption">Arizona reservoir showing water scarcity impacts</p>
+                    </div>
+                </div>
+
+                <h3>What Has Worked</h3>
+                <ul>
+                    <li><strong>Water conservation policies:</strong> Arizona has managed to reduce total water use by about 3% since the 1950s, even with massive population growth, showing successful long-term efficiency strategies.</li>
+                    <li><strong>Groundwater Management Act (1980):</strong> Provided regulation and monitoring of groundwater pumping, especially in Active Management Areas (AMAs).</li>
+                    <li><strong>Drought Contingency Plan (2019):</strong> Encouraged shared responsibility between cities, tribes, and farmers to cut water usage from the Colorado River.</li>
+                    <li><strong>Urban water efficiency:</strong> Cities like Phoenix have pioneered water recycling, wastewater reuse, and drought-resistant landscaping programs.</li>
+                    <li><strong>Innovation funding:</strong> WIFA (Water Infrastructure Finance Authority) has already financed more than 180 projects supporting conservation, new water sources, and water-related infrastructure.</li>
+                </ul>
+
+                <h3>What Needs Improvement</h3>
+                <ul>
+                    <li><strong>Agricultural water use:</strong> Agriculture still consumes roughly 70% of the state's water; improving irrigation methods and crop choices remains a huge challenge.</li>
+                    <li><strong>Public education:</strong> Many residents don't fully understand the urgency of the crisis or how state water laws and cutbacks work.</li>
+                    <li><strong>Data transparency:</strong> Inconsistent water usage reporting makes it difficult to measure progress or identify problem areas clearly.</li>
+                    <li><strong>Equitable water policy:</strong> Smaller rural and tribal communities often lack access to water infrastructure funding compared to urban areas.</li>
+                    <li><strong>Coordination among agencies:</strong> Different state and federal agencies sometimes operate under separate goals, which slows down large-scale water planning.</li>
+                </ul>
+
+                <h3>Drawbacks & Challenges</h3>
+                <ul>
+                    <li><strong>Overreliance on the Colorado River:</strong> Depletion of Lake Mead and reduced snowpack in the Rockies threaten long-term water supply stability.</li>
+                    <li><strong>Cost of new solutions:</strong> Desalination and water importation can cost thousands per acre-foot — far more expensive than conservation efforts.</li>
+                    <li><strong>Political disagreements:</strong> Lawsuits (like those involving the Goldwater Institute) show strong resistance to new regulations from some interest groups.</li>
+                    <li><strong>Climate uncertainty:</strong> Rising temperatures and prolonged droughts make water planning unpredictable, even for well-established systems.</li>
+                    <li><strong>Infrastructure aging:</strong> Many cities and irrigation districts depend on outdated systems that waste water through leaks or inefficiency.</li>
+                </ul>
+
+                <h3>Future Considerations</h3>
+                <ul>
+                    <li><strong>Expand reuse and recycling:</strong> Increase investment in purple pipe infrastructure for graywater and wastewater reuse in urban and rural areas.</li>
+                    <li><strong>Promote sustainable agriculture:</strong> Support farmers switching to less water-intensive crops and water banking programs that reward conservation.</li>
+                    <li><strong>Integrate tribal partnerships:</strong> Collaborate with tribal nations on water rights settlements and shared management strategies.</li>
+                    <li><strong>Invest in technology:</strong> Improve forecasting tools, irrigation tech, and leak detection systems using satellite or sensor data.</li>
+                    <li><strong>Strengthen public policy education:</strong> Teach students and communities about water law and conservation to build long-term cultural change.</li>
+                    <li><strong>Adaptation planning:</strong> Focus future policies on climate adaptation, not just short-term crisis response.</li>
+                </ul>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>3%</h4>
+                        <p>Reduction in water use since 1950s despite population growth</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>70%</h4>
+                        <p>Of state water consumed by agriculture</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>180+</h4>
+                        <p>Projects financed by WIFA</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>41%</h4>
+                        <p>Arizona's water use from groundwater</p>
+                    </div>
+                </div>
+
+                <h3>Addressing Opposing Viewpoints</h3>
+                <p>Some people argue that Arizona's water crisis is overblown and that the free market should handle water allocation without government interference. Organizations like the Goldwater Institute have even sued the Arizona Department of Water Resources, claiming that regulations restrict property rights and economic development. However, this viewpoint ignores the reality that water is a shared resource that affects everyone. Without government oversight, wealthy corporations and large agricultural operations could deplete groundwater supplies, leaving smaller communities and future generations with nothing.</p>
+
+                <p>Another common argument is that expensive solutions like desalination are too costly and Arizona should just focus on conservation. While it's true that desalination can cost around $2,500 per acre-foot compared to $6-10 for irrigation improvements, relying only on conservation isn't realistic when Arizona's population keeps growing and the Colorado River keeps shrinking. We need both conservation and new water sources to actually solve this crisis long-term. The data shows that even though conservation has helped reduce water use by 3% since the 1950s, it's not enough on its own when we're facing such massive shortages.</p>
+
+                <p>Some farmers also argue that cutting agricultural water use would destroy Arizona's farming economy, but research shows that shifting to less water-intensive crops and improving irrigation efficiency can actually save water without killing the industry. The real issue is that agriculture uses 70% of our water but contributes much less to the economy compared to urban areas. Finding a balance through smart policy and financial incentives makes way more sense than letting the crisis get worse until we have no choice but to make drastic cuts.</p>
+            </div>
+
+            <div id="integration" class="tab-content">
+                <h2>Academic Integration</h2>
+
+                <div class="highlight-box">
+                    <h3>Topic 1: Chapter 3 - FEDERALISM</h3>
+                    <p>Water policy involves both state and federal governments over who control water resources. The chapter talks about how the constitution gives states certain powers while the national government has others, and water rights in Arizona prove this to be true. For example, the Rio Grande Compact mentioned in the chapter is very similar to how Arizona has to share the Colorado River water with other states through interstate compacts, which often need federal approval according to the Constitution's rules regarding horizontal federalism. Arizona's response to Trump's "Navigable Water Protection Rule" shows cooperative federalism happening, as the state supported the narrower federal definition of protected water because it allowed Arizona to regulate its own waters "locally in practical and pragmatic ways". This often creates conflicts that end up in court, like how the Supreme court mentioned in the chapter where justices have to decide if the national government or states have more power.</p>
+                    
+                    <p><strong>Source:</strong> Snell & Wilmer. 2020. "Cooperative Federalism and the Clean Water Act: The States Finally Get Their Due." Law Offices of Snell & Wilmer. www.swlaw.com/blogs/environmental-and-natural-resources/2020/02/14/cooperative-federalism-and-the-clean-water-act-the-states-finally-get-their-due/.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>Topic 4: Chapter 10 - PUBLIC OPINION</h3>
+                    <p>Water policy in Arizona is a perfect example of how public opinion shapes what issues get put out in politics and what policies get passed in Congress. The chapter talks about how public opinion is basically shaping what people think about issues at different times. And according to a specific Arizona survey mentioned in the source 93% of voters agreed that groundwater is essential and needs protection and I agree with this this actually shows how public opinions can create pressure on politicians to actually do something about an issue because that is what they were made for in the first place the chapter also explains how differing means of socialization like news and media help determine this like agenda by focusing on public attention issues and specifically water Arizona which is clearly a big issue and it gets way more attention because people in countries like Saudi Arabia talk about pumping groundwater and running well dry and it makes more people care about it. Basically even though water is very complicated and candidates don't really want to talk about it, according to the source I mentioned voters keep it as a top priority especially in Arizona because they've been almost socialized to understand how important it is for their families and for the state as a whole.</p>
+                    
+                    <p><strong>Source:</strong> Riley, Kiera. 2024. "Water Policy Is on the Minds of Voters as Drought Continues." Arizona Capitol Times. azcapitoltimes.com/news/2024/09/29/water-policy-is-on-the-minds-of-voters-as-drought-continues/.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>Topic 2: Chapter 4 - CONGRESS</h3>
+                    <p>This demonstrates how Congress performs its key constitutional functions like representation and lawmaking. The chapter explains that Congress has several important functions, including policymaking, agenda setting, and managing different conflicts and errors. Water policy in Arizona involves all of these. According to one source about the WATER Act, Congress faces a choice between cutting water funding or passing legislation that would allow permanent federal funding for water infrastructure, which shows how Congress's power to tax and spend, which is an enumerated power that we learned in class, directly affects water policy. The chapter talks about how members of Congress use different models of representation, like the trustee model and the delegate model. With 93% of Arizona voters supporting groundwater protection, these representatives would most likely act as delegates on these water issues because such a high amount of Arizona voters support these issues. It would make sense for the lawmakers in Congress to also support these issues. Also, the WATER Act shows that Congress is doing different work by trying to help constituents get access to clean and affordable water, which is exactly the kind of lawmaking in Congress that people in Arizona want to see.</p>
+                    
+                    <p><strong>Source:</strong> Grant, Mary. 2025. "The WATER Act: How We Protect Our Water from Trump's Agenda." Food & Water Watch. www.foodandwaterwatch.org/2025/05/13/water-act-reintroduction-trump/.</p>
+                </div>
+            </div>
+
+            <div id="action" class="tab-content">
+                <h2>Taking Action</h2>
+
+                <div class="highlight-box">
+                    <h3>Community Service & Volunteer Experience</h3>
+                    
+                    <img src="greenway_treatment_plant_volunteer.jpg" alt="Volunteering at Greenway Water Treatment Plant" class="project-image">
+                    <p class="image-caption">Volunteering at the City of Peoria's Greenway Water Treatment Plant</p>
+                    
+                    <p>To deepen my understanding of Arizona's water crisis, I volunteered at the City of Peoria's Water Services Department, specifically at the Greenway Water Treatment Plant. This hands-on experience allowed me to learn about the water industry from professionals working directly on these issues every day.</p>
+                    
+                    <p>During my time at the plant, I learned about the Colorado River depletion and how that directly affects residents in our community. Seeing the treatment processes firsthand and understanding the infrastructure challenges gave me a much more concrete understanding of the policy issues I had been researching. This experience reinforced how critical water conservation and sustainable management practices are for Arizona's future.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>Action Plan & Implementation Goals</h3>
+                    <p>Based on my research, I've identified specific, measurable goals for addressing Arizona's water crisis:</p>
+                    
+                    <p><strong>Goal 1: Expand Groundwater Management Statewide</strong><br>
+                    Implementation: Work with local officials to extend Active Management Area (AMA) regulations to rural communities. This could be done by supporting legislation that requires groundwater monitoring in unregulated areas and providing state funding for rural water infrastructure. Success would be measured by the number of new wells monitored and reduction in groundwater depletion rates in rural Arizona.</p>
+                    
+                    <p><strong>Goal 2: Increase Public Awareness and Education</strong><br>
+                    Implementation: Create educational campaigns at schools and community centers that explain water conservation techniques and policy impacts. Partner with local water departments to distribute information about drought-resistant landscaping and efficient water use. Success would be measured by surveying community members before and after campaigns to track increased awareness of water issues and behavior changes in household water consumption.</p>
+                    
+                    <p>These goals directly connect to my research findings that show rural areas need better protection and that public education is currently lacking. By advocating for policy changes and spreading awareness, I'm turning my research into real community action.</p>
+                </div>
+
+                <div class="letter-section">
+                    <h3>Letter to Senator Priya Sundareshan</h3>
+                    <p><strong>Senator Priya Sundareshan</strong><br>
+                    Arizona Senate, Legislative District 18<br>
+                    1700 W. Washington St.<br>
+                    Phoenix, AZ 85007</p>
+
+                    <p style="margin-top: 25px;"><strong>Brief Bio:</strong> Priya Sundareshan was elected to the Arizona Senate in 2023 to represent Legislative District 18. She serves as Ranking Member on the Senate Elections and Natural Resources/Energy/Water Committees and sits on the Government Committee. Born and raised in LD18, she has taught natural resources law at the University of Arizona, advocated for sustainable resource management with the Environmental Defense Fund, and holds degrees in engineering from MIT and law/natural resource economics from the University of Arizona.</p>
+
+                    <p style="margin-top: 25px;">Dear Senator Sundareshan,</p>
+
+                    <p>My name is Ayan Bhakta, and I am a high school senior at Mountain Ridge High School. To increase my knowledge of the political atmosphere in America, I am taking AP United States Government and Politics. In this class, I completed a research project on any issue of my choice. I chose Arizona water policy, which relates to the public policy area of water resource management and sustainability.</p>
+
+                    <p>Arizona faces a severe water crisis driven by Colorado River shortages and groundwater depletion, with reservoirs like Lake Mead and Lake Powell at about 30% capacity in 2025. I am writing to you as a constituent concerned about this issue in our community. Arizona relies on groundwater for 41% of its water use, more than any other source, yet the state is depleting aquifers faster than any other in the Colorado River Basin.</p>
+
+                    <p><strong>I have included strategies our state can implement to begin to solve Arizona's water challenges:</strong></p>
+
+                    <ul>
+                        <li><strong>Strengthen and expand groundwater management programs</strong> beyond urban Active Management Areas (AMAs). While policies have banked 10.5 cubic kilometers of groundwater in Phoenix, Tucson, and Pinal AMAs from 1989 to 2019, rural areas like southeastern Arizona are losing groundwater at over 8 millimeters per year, with rates doubling to 12 millimeters annually since 2015. Arizona can extend similar recharge and conservation rules statewide to protect rural wells and prevent land subsidence.</li>
+                        
+                        <li><strong>Invest in alternative water supplies</strong> like desalination and wastewater reuse. With Colorado River cuts and stalled negotiations, proposals from the Water Infrastructure Finance Authority include desalination plants in Mexico and advanced purification projects, which could deliver billions of gallons annually without relying on depleting river flows.</li>
+                        
+                        <li><strong>Promote conservation through grants, infrastructure upgrades, and land-use shifts.</strong> Water conservation grants have already funded over 200 projects saving 6.5 million acre-feet, and expanding stormwater harvesting from high-water agriculture to urban development could save millions more acre-feet over decades.</li>
+                    </ul>
+
+                    <p>Arizona's groundwater losses equal Lake Mead's capacity between 2002 and 2024, threatening communities, agriculture, and growth amid rapid development. Arizona can secure its water future through expanded management, new supplies, and aggressive conservation. I would appreciate your feedback, opinions, or further action you plan to take on these water policy issues. Thank you for taking the time to read this letter.</p>
+
+                    <p>Sincerely,<br>
+                    <strong>Ayan Bhakta</strong></p>
+                </div>
+            </div>
+
+            <div id="reflection" class="tab-content">
+                <h2>Reflection</h2>
+
+                <div class="highlight-box">
+                    <h3>1. What still needs to be done to further your goals?</h3>
+                    <p>To further my project goals, I still need to connect my research on water policy to real community actions. I've learned a lot about different solutions, like water sharing, conservation programs, and desalination, but I still want to figure out which ones are actually realistic for local towns in Arizona. I also need to collect more firsthand opinions from residents or local leaders to understand how policies really affect people day-to-day.</p>
+                    
+                    <p>Basically, I've done the research part, but now I need to turn that knowledge into advocacy or education that helps others care about the issue. I think creating a small awareness campaign or presenting my findings to my school or a local government meeting would be a great next step. I could also focus on finding specific funding or internship opportunities in water management to build on this project in the future.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>2. What are some of the pressing needs/issues in the community? How does this project address those needs?</h3>
+                    <p>One of the biggest issues is Arizona's dependence on the Colorado River, which is drying up from overuse and climate change. Communities are facing drought, water rationing, and political battles about who should get water first. My project helps address this by spreading awareness about realistic policy solutions and showing how collaboration between cities, farmers, and the state can make a difference.</p>
+                    
+                    <p>For example, WIFA's conservation programs and the Drought Contingency Plan focus on saving and reusing water, which are ideas I can help share with my community. Another major need is educating people about how serious the water shortage is before it becomes an even bigger crisis. By learning about these policies, I can help others see that their local actions, like conserving water at home, are connected to these larger state issues.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>3. What would you like to learn more about, related to this project or issue?</h3>
+                    <p>I'd like to learn more about how local farmers are affected by water cuts and what tools or incentives they need to conserve more efficiently. I also want to better understand how tribal water rights connect to state policy since tribes play a major role in Arizona's water management. Learning about these perspectives would make my project more balanced and realistic, not just focused on government agencies.</p>
+                    
+                    <p>I'm also curious about new water-saving technologies, like advanced irrigation systems or water recycling programs, and how affordable they are for rural areas. Understanding the economics behind those solutions would help me create stronger policy recommendations. It would also help me learn how to make water policies fairer to everyone, not just the biggest users.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>4. What follow-up is needed to address any challenges or difficulties?</h3>
+                    <p>A big challenge is getting accurate, unbiased data since a lot of sources have political or economic interests. Another difficulty is that water policies take years to show results, so it's hard to measure success right away. The follow-up would be to track ongoing projects like the WIFA framework and see their progress over the next few years.</p>
+                    
+                    <p>I could also work on reaching out to local officials or water organizations to confirm how well certain policies are actually working. Doing a follow-up presentation or update later in the year could also show how conditions change and what new policies are introduced. Staying updated on water legislation is important so that my project doesn't just end with this research, but keeps growing as policies evolve.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>5. What information can you share with your peers or the community?</h3>
+                    <p>I can share what I've learned about how serious the water shortage really is, but also how many smart solutions already exist. For example, Arizona has reduced water use by 3% since 1957 even though our population grew over 500%. That's a sign that conservation works when it's planned well.</p>
+                    
+                    <p>I could also share data on how water prices, policies, and technology interact so people understand that small actions like efficient landscaping or limiting groundwater use actually add up. I can make this information more engaging by using infographics, interactive maps, or social media posts that simplify the data. Sharing this information in schools or community events could help more young people see how sustainability connects to their future. I think if more students learned about how water laws work, we could inspire more empathy and teamwork toward solving it.</p>
+                </div>
+            </div>
+
+            <div id="citations" class="tab-content">
+                <h2>Works Cited</h2>
+
+                <div class="citation">
+                    Arizona Chamber Foundation, Prosper Foundation, and Edwin Barbey Charitable Trust. 2018. "Arizona Water Policy Brief." azchamberfoundation.org/wp-content/uploads/2018/06/AZ-Water-Policy-Brief-1.pdf.
+                </div>
+
+                <div class="citation">
+                    Arizona Water Infrastructure Finance Authority. n.d. "Strategic Framework." azwifa.gov/about/strategic-framework.
+                </div>
+
+                <div class="citation">
+                    Farmonaut. 2025. "Phoenix Water Management: Overcoming Arizona's Water Scarcity." farmonaut.com/usa/arizonas-water-crisis-balancing-groundwater-management-and-sustainable-development-in-phoenix.
+                </div>
+
+                <div class="citation">
+                    Frisvold, George B. n.d. "Arizona Policy Responses to Water Shortage: Can They Have an Impact?" Choices Magazine. www.choicesmagazine.org/choices-magazine/theme-articles/colorado-river-basin/arizona-policy-responses-to-water-shortage-can-they-have-an-impact.
+                </div>
+
+                <div class="citation">
+                    Grant, Mary. 2025. "The WATER Act: How We Protect Our Water from Trump's Agenda." Food & Water Watch. www.foodandwaterwatch.org/2025/05/13/water-act-reintroduction-trump/.
+                </div>
+
+                <div class="citation">
+                    Riley, Kiera. 2024. "Water Policy Is on the Minds of Voters as Drought Continues." Arizona Capitol Times. azcapitoltimes.com/news/2024/09/29/water-policy-is-on-the-minds-of-voters-as-drought-continues/.
+                </div>
+
+                <div class="citation">
+                    Snell & Wilmer. 2020. "Cooperative Federalism and the Clean Water Act: The States Finally Get Their Due." Law Offices of Snell & Wilmer. www.swlaw.com/blogs/environmental-and-natural-resources/2020/02/14/cooperative-federalism-and-the-clean-water-act-the-states-finally-get-their-due/.
+                </div>
+
+                <div class="citation">
+                    Western Resource Advocates. 2025. "Arizona's Water Future: Colorado River Shortage & Innovative Solutions for Living Well with Less." westernresourceadvocates.org/publications/arizonas-water-future-colorado-river-shortage-innovative-solutions-living-well-less/.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-btn');
+            
+            contents.forEach(content => content.classList.remove('active'));
+            buttons.forEach(button => button.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
